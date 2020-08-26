@@ -1,8 +1,6 @@
-import React, {Component, useState} from 'react';
-import {View, Text, Button, Dimensions, SafeAreaView} from 'react-native';
+import React, {useState} from 'react';
 import FloatingLabelInput from 'react-native-floating-label-input';
 import styles from './styles';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const FBARNButton = (props) => {
   const [value, setValue] = useState('');
@@ -12,7 +10,10 @@ const FBARNButton = (props) => {
       label={props.label}
       value={value}
       secureTextEntry={props.isSecure}
-      onChangeText={(text) => setValue(text)}
+      onChangeText={(text) => {
+        setValue(text);
+        props.onChangeText(text);
+      }}
     />
   );
 };

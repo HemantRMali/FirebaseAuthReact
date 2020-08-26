@@ -1,10 +1,11 @@
-import React, {Component, useState} from 'react';
-import {View, Text, Button, Dimensions, SafeAreaView} from 'react-native';
-import FloatingLabelInput from 'react-native-floating-label-input';
+import React, {useState} from 'react';
+import {View, Text, SafeAreaView, Alert} from 'react-native';
 import styles from './styles';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import FBARNTextInput from '../../components/TextInput';
 import FBARNButton from '../../components/Button';
+import {isValidEmail, isValidPassword} from '../../methods';
+
 const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +24,11 @@ const Login = (props) => {
         />
         <FBARNButton
           title="Sign In"
-          onPress={() => props.navigation.navigate('Dashboard')}
+          onPress={() =>
+            isValidEmail(email) && isValidPassword(password)
+              ? props.navigation.navigate('Dashboard')
+              : Alert.alert('In valid inputs')
+          }
         />
         <TouchableOpacity onPress={() => props.navigation.navigate('Signup')}>
           <Text style={styles.noAccount}>No account yet? Create one</Text>
