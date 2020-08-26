@@ -10,15 +10,29 @@ import Dashboard from './src/screens/dashboard';
 enableScreens();
 const Stack = createNativeStackNavigator();
 
+const navigationOptions = {
+  headerShown: false,
+  header: null,
+};
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Signup" component={Signup} />
-      </Stack.Navigator>
-      <Stack.Navigator initialRouteName="Dashboard">
-        <Stack.Screen name="Dashboard" component={Dashboard} />
+        <Stack.Screen
+          name="Login"
+          options={navigationOptions}
+          component={Login}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={navigationOptions}
+        />
+        <Stack.Screen
+          name="Dashboard"
+          options={{headerHideBackButton: true}}
+          component={Dashboard}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
