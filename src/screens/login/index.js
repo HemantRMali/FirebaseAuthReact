@@ -1,10 +1,18 @@
 import React, {useState} from 'react';
-import {View, Text, SafeAreaView, Alert, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Alert,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import styles from './styles';
 
 import FBARNTextInput from '../../components/TextInput';
 import FBARNButton from '../../components/Button';
 import {isValidEmail, isValidPassword} from '../../methods';
+import ScreenTitle from '../../components/ScreenTitle';
 import auth from '@react-native-firebase/auth';
 /**
  * This component is used to handled user login and validations activity.
@@ -39,27 +47,32 @@ const Login = (props) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <FBARNTextInput
-          label="Email"
-          onChangeText={(value) => setEmail(value)}
-        />
-        <FBARNTextInput
-          label="Password"
-          isSecure={true}
-          onChangeText={(value) => setPassword(value)}
-        />
-        <FBARNButton
-          title="Sign In"
-          onPress={() => {
-            console.log('Sign In');
-            isValidEmail(email) && isValidPassword(password)
-              ? loginUser()
-              : Alert.alert('In valid inputs');
-          }}
-        />
-        <TouchableOpacity onPress={() => props.navigation.navigate('Signup')}>
-          <Text style={styles.noAccount}>No account yet? Create one</Text>
-        </TouchableOpacity>
+        <ScrollView
+          contentContainerStyle={styles.scrollViewContentContainerStyle}>
+          <ScreenTitle title="Login" />
+          <FBARNTextInput
+            label="Email"
+            keyboardType="email-address"
+            onChangeText={(value) => setEmail(value)}
+          />
+          <FBARNTextInput
+            label="Password"
+            isSecure={true}
+            onChangeText={(value) => setPassword(value)}
+          />
+          <FBARNButton
+            title="Sign In"
+            onPress={() => {
+              console.log('Sign In');
+              isValidEmail(email) && isValidPassword(password)
+                ? loginUser()
+                : Alert.alert('Invalid inputs');
+            }}
+          />
+          <TouchableOpacity onPress={() => props.navigation.navigate('Signup')}>
+            <Text style={styles.noAccount}>No account yet? Create one</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );

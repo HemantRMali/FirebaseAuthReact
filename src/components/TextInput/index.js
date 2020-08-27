@@ -10,6 +10,7 @@ const FBARNButton = (props) => {
       label={props.label}
       value={value}
       secureTextEntry={props.isSecure}
+      keyboardType={props.keyboardType}
       onChangeText={(text) => {
         setValue(text);
         props.onChangeText(text);

@@ -1,9 +1,17 @@
 import React, {useState} from 'react';
-import {View, Text, SafeAreaView, Alert, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  SafeAreaView,
+  Alert,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import styles from './styles';
 import FBARNTextInput from '../../components/TextInput';
 import FBARNButton from '../../components/Button';
 import {isValidEmail, isValidPassword} from '../../methods';
+import ScreenTitle from '../../components/ScreenTitle';
 import auth from '@react-native-firebase/auth';
 
 /**
@@ -40,41 +48,46 @@ const Signup = (props) => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
-        <FBARNTextInput
-          label="Email"
-          onChangeText={(value) => setEmail(value)}
-        />
-        <FBARNTextInput
-          label="Password"
-          isSecure={true}
-          onChangeText={(value) => setPassword(value)}
-        />
-        <FBARNTextInput
-          label="Confirm Password"
-          isSecure={true}
-          onChangeText={(value) => setConfirmPassword(value)}
-        />
-        <FBARNButton
-          title="Sign Up"
-          onPress={() => {
-            if (
-              isValidEmail(email) &&
-              isValidPassword(password) &&
-              isValidPassword(confirmPassword)
-            ) {
-              if (password === confirmPassword) {
-                registerUser();
+        <ScrollView
+          contentContainerStyle={styles.scrollViewContentContainerStyle}>
+          <ScreenTitle title="Register" />
+          <FBARNTextInput
+            label="Email"
+            keyboardType="email-address"
+            onChangeText={(value) => setEmail(value)}
+          />
+          <FBARNTextInput
+            label="Password"
+            isSecure={true}
+            onChangeText={(value) => setPassword(value)}
+          />
+          <FBARNTextInput
+            label="Confirm Password"
+            isSecure={true}
+            onChangeText={(value) => setConfirmPassword(value)}
+          />
+          <FBARNButton
+            title="Sign Up"
+            onPress={() => {
+              if (
+                isValidEmail(email) &&
+                isValidPassword(password) &&
+                isValidPassword(confirmPassword)
+              ) {
+                if (password === confirmPassword) {
+                  registerUser();
+                } else {
+                  Alert.alert('Password and confirm password does not match');
+                }
               } else {
-                Alert.alert('Password and confirm password does not match');
+                Alert.alert('Invalid inputs');
               }
-            } else {
-              Alert.alert('In valid inputs');
-            }
-          }}
-        />
-        <TouchableOpacity onPress={() => props.navigation.goBack()}>
-          <Text style={styles.noAccount}>Already have account? Sign In</Text>
-        </TouchableOpacity>
+            }}
+          />
+          <TouchableOpacity onPress={() => props.navigation.goBack()}>
+            <Text style={styles.noAccount}>Already have account? Sign In</Text>
+          </TouchableOpacity>
+        </ScrollView>
       </View>
     </SafeAreaView>
   );
