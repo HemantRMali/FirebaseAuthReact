@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "355826973890",
+    "firebase_url": "https://fir-authrn-ccff3.firebaseio.com",
+    "project_id": "fir-authrn-ccff3",
+    "storage_bucket": "fir-authrn-ccff3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:355826973890:android:75ebe530e594e6ba61cf5b",
+        "android_client_info": {
+          "package_name": "com.firebaseauthrn"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "355826973890-s7532so1d8q3u0vj7lcmrdqgnlta9hin.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKy2S6MSw_PSfbMPnyYnlm19fEuPOoWTc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "355826973890-s7532so1d8q3u0vj7lcmrdqgnlta9hin.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "355826973890-g1si36naototre07ptcdkrsfsekagcg9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.hemant.FirebaseAuthRN"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

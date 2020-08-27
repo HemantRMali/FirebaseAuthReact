@@ -30,7 +30,7 @@ function App() {
         />
         <Stack.Screen
           name="Dashboard"
-          options={{headerHideBackButton: true}}
+          options={{headerHideBackButton: true, gestureEnabled: false}}
           component={Dashboard}
         />
       </Stack.Navigator>

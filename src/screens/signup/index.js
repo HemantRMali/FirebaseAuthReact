@@ -1,15 +1,42 @@
 import React, {useState} from 'react';
-import {View, Text, SafeAreaView, Alert} from 'react-native';
+import {View, Text, SafeAreaView, Alert, TouchableOpacity} from 'react-native';
 import styles from './styles';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import FBARNTextInput from '../../components/TextInput';
 import FBARNButton from '../../components/Button';
 import {isValidEmail, isValidPassword} from '../../methods';
+import auth from '@react-native-firebase/auth';
+
+/**
+ * This component is used to handled user registration and validations activity.
+ * @param {*} props
+ */
+
+export const showAlert = (message) => {
+  Alert.alert(message);
+};
+
 const Signup = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const registerUser = () => {
+    auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        showAlert('User account created & signed in!');
+        props.navigation.navigate('Dashboard');
+      })
+      .catch((error) => {
+        if (error.code === 'auth/email-already-in-use') {
+          showAlert('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          showAlert('That email address is invalid!');
+        }
+      });
+  };
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
@@ -36,7 +63,7 @@ const Signup = (props) => {
               isValidPassword(confirmPassword)
             ) {
               if (password === confirmPassword) {
-                props.navigation.navigate('Dashboard');
+                registerUser();
               } else {
                 Alert.alert('Password and confirm password does not match');
               }

@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
-import {View, SafeAreaView} from 'react-native';
+import {View, SafeAreaView, FlatList} from 'react-native';
 
 import styles from './styles';
-import {FlatList} from 'react-native-gesture-handler';
+
 import Item from '../../components/ProductItem';
 const DATA = [
   {

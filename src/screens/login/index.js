@@ -1,14 +1,40 @@
 import React, {useState} from 'react';
-import {View, Text, SafeAreaView, Alert} from 'react-native';
+import {View, Text, SafeAreaView, Alert, TouchableOpacity} from 'react-native';
 import styles from './styles';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+
 import FBARNTextInput from '../../components/TextInput';
 import FBARNButton from '../../components/Button';
 import {isValidEmail, isValidPassword} from '../../methods';
+import auth from '@react-native-firebase/auth';
+/**
+ * This component is used to handled user login and validations activity.
+ * @param {*} props
+ */
+
+export const showAlert = (message) => {
+  Alert.alert(message);
+};
 
 const Login = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const loginUser = () => {
+    auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        showAlert('User account signed in!');
+        props.navigation.navigate('Dashboard');
+      })
+      .catch((error) => {
+        if (error.code === 'auth/user-not-found') {
+          showAlert('User not found!');
+        }
+        if (error.code === 'auth/invalid-email') {
+          showAlert('That email address is invalid!');
+        }
+      });
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -24,11 +50,12 @@ const Login = (props) => {
         />
         <FBARNButton
           title="Sign In"
-          onPress={() =>
+          onPress={() => {
+            console.log('Sign In');
             isValidEmail(email) && isValidPassword(password)
-              ? props.navigation.navigate('Dashboard')
-              : Alert.alert('In valid inputs')
-          }
+              ? loginUser()
+              : Alert.alert('In valid inputs');
+          }}
         />
         <TouchableOpacity onPress={() => props.navigation.navigate('Signup')}>
           <Text style={styles.noAccount}>No account yet? Create one</Text>
