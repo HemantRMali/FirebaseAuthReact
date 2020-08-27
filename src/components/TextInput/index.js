@@ -8,7 +8,7 @@ const FBARNButton = (props) => {
     <FloatingLabelInput
       containerStyles={styles.textInputContainer}
       label={props.label}
-      value={value}
+      value={props.value}
       secureTextEntry={props.isSecure}
       keyboardType={props.keyboardType}
       onChangeText={(text) => {

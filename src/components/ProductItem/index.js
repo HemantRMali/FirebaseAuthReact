@@ -5,16 +5,15 @@ const Item = ({item}) => (
   <View style={styles.item}>
     <Image
       source={{
-        uri:
-          'http://images.thenorthface.com/is/image/TheNorthFace/236x204_CLR/mens-better-than-naked-jacket-AVMH_LC9_hero.png',
+        uri: item['product-image-url'],
       }}
       style={styles.productImage}
     />
     <View style={styles.titlesContainer}>
-      <Text style={styles.title}>{item.title}</Text>
-      <Text style={styles.subTitle}>{item.subTitle}</Text>
+      <Text style={styles.title}>{item['product-name']}</Text>
+      <Text style={styles.subTitle}>{item['header-top-left-text']}</Text>
       <View style={styles.bottomTitle}>
-        <Text style={{color: 'white'}}>{item.bottomTitle}</Text>
+        <Text style={{color: 'white'}}>{item['product-cta-text']}</Text>
       </View>
     </View>
   </View>

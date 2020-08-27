@@ -1,42 +1,42 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, SafeAreaView, FlatList} from 'react-native';
 
 import styles from './styles';
 
 import Item from '../../components/ProductItem';
-const DATA = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
-    subTitle:
-      'ashjdasldhjh jkasjkdh kajshd asdl hHskdhaksdkasdjhaskdhaksdh askdhaskdhjkashdkjashd kjahsd kajshd asdl hHskdhaksdkasdjhaskdhaksdh askdhaskdhjka asjkdh kajshd asdl hHskdhaksdkasdjhaskdhaksdh askdhaskdhjkashdkjashd kjahsd kajshd asdl hHskdhaksdkasdjhaskdhaksdh askdhaskdhjka asjkdh kajshd asdl hHskdhaksdkasdjhaskdhaksdh askdhaskdhjkashdkjashd kjahsd kajshd asdl hHskdhaksdkasdjhaskdhaksdh askdhaskdhjka shdkjashd kjahsd',
-    bottomTitle: 'asdljkasj ftywe ',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
-    subTitle: 'asldhasdhkashdjkash aseytqwuyetqwu ',
-    bottomTitle: 'rkgeoitewor uiyerewi',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
-    subTitle: 'aslkdjhasj asduiyiusa asdasdhjjbkasd',
-    bottomTitle: ' askdljals ',
-  },
-];
 
+const renderItem = ({item}) => <Item item={item} />;
+
+import database from '@react-native-firebase/database';
+
+import Loader from '../../components/Loader';
+
+/**
+ * This component is used to get products from firebase and show in flatlist.
+ * @param {*} props
+ */
 const Dashboard = (props) => {
-  const renderItem = ({item}) => <Item item={item} />;
-  const [products, setProducts] = useState([1, 2, 3, 4, 5, 6]);
+  const [products, setProducts] = useState();
+  const [isLoading, setLoading] = useState();
+  // consider it as component did mount
+  useEffect(() => {
+    setLoading(true);
+    const response = database().ref('products');
+    response.on('value', (snapshot) => {
+      console.log('snapshot:', snapshot.val());
+      setProducts(snapshot.val());
+      setLoading(false);
+    });
+  }, []);
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <View style={styles.container}>
+        <Loader isTransparent={true} loading={isLoading} />
         <FlatList
-          data={DATA}
+          data={products}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => String(index)}
         />
       </View>
     </SafeAreaView>
